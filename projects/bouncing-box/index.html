@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Bouncing Box</title>
+	<script src="jquery.min.js"></script>
+	<style>
+		.box {
+			width: 70px;
+			height: 70px;
+			background-color: teal;
+			font-size: 300%;
+			text-align: center;
+			display: block;
+			position: absolute;
+			top: 100px;
+			left: 0px;  /* <--- Change me! */
+		}
+		#pandf {
+			width: 100%;
+			height: 100%;
+			
+			margin-top: -25%;
+		}
+		.board {
+			overflow-y: hidden;
+		}
+		#balloony {
+			width: 70px;
+			height: 70px;
+			position: absolute;
+			left: 0px;
+		}
+	</style>
+	<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
+
+</head>
+<body class="board">
+	<!-- HTML for the box -->
+	<img src = "p and f.jfif" type = "image/jfif" id = "pandf">
+	<div class="box">
+		?
+		<img src = "balloony.png" type = "image/png" id = "balloony">
+	</div>
+		
+	<script>
+		(function(){
+			'use strict'
+			/* global jQuery */
+
+			//////////////////////////////////////////////////////////////////
+			/////////////////// SETUP DO NOT DELETE //////////////////////////
+			//////////////////////////////////////////////////////////////////
+			
+			var box = jQuery('.box');	// reference to the HTML .box element
+			var board = jQuery('.board');	// reference to the HTML .board element
+			var boardWidth = board.width();	// the maximum X-Coordinate of the screen
+			var boardHeight = jQuery(window).height();
+			// Every 50 milliseconds, call the update Function (see below)
+			setInterval(update, 50);
+			
+			// Every time the box is clicked, call the handleBoxClick Function (see below)
+			box.on('click', handleBoxClick);
+
+			// moves the Box to a new position on the screen along the X-Axis
+			function moveBoxTo(newPositionX, newPositionY) {
+				box.css("left", newPositionX);
+				box.css("top", newPositionY);
+			}
+			// changes the text displayed on the Box
+			function changeBoxText(newText) {
+				box.text(newText);
+			}
+
+			//////////////////////////////////////////////////////////////////
+			/////////////////// YOUR CODE BELOW HERE /////////////////////////
+			//////////////////////////////////////////////////////////////////
+			
+			// TODO 2 - Variable declarations 
+			var posX = 0;
+			var posY = 0;
+			var points = 0;
+			var speed = 10;
+			var directionX = 1;
+			var directionY = 1;
+			/* 
+			This Function will be called 20 times/second. Each time it is called,
+			it should move the Box to a new location. If the box drifts off the screen
+			turn it around! 
+			*/
+			function update() {
+			posX = posX + speed * directionX;
+			posY = posY + speed * directionY;
+			moveBoxTo(posX, posY);
+			if (posX + 70 > boardWidth) {
+				directionX = -1;
+			}
+			if (posX < 0) {
+					directionX = 1;
+			}
+			
+
+			
+
+			if (posY > boardHeight) {
+				directionY = -1;
+			}
+			if (posY < 0) {
+					directionY = 1;
+			}
+			}
+			
+			/* 
+			This Function will be called each time the box is clicked. Each time it is called,
+			it should increase the points total, increase the speed, and move the box to
+			the left side of the screen.
+			*/
+			function handleBoxClick() {
+			posX = Math.random() * (boardWidth - 70);
+			posY = Math.random() * (boardHeight - 70);
+			points++;
+			$('img src = "balloony.png" type = "image/png" id = "balloony">').appendTo('.box')		
+			changeBoxText(points);
+			speed = speed + 3;
+			};
+		})();
+	</script>
+</body>
+</html>
